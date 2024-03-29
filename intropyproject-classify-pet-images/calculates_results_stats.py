@@ -42,6 +42,9 @@
 #       in the return statement with the results_stats_dic dictionary that you create 
 #       with this function
 # 
+from enum import Enum
+
+
 def calculates_results_stats(results_dic):
     """
     Calculates statistics of the results of the program run using classifier's model 
@@ -70,4 +73,56 @@ def calculates_results_stats(results_dic):
     """        
     # Replace None with the results_stats_dic dictionary that you created with 
     # this function 
-    return None
+    # Creates empty dictionary for results_stats_dic.
+    results_stats_dic = dict()
+    
+    # Sets all counters to initial values of zero so that they can 
+    # be incremented while processing through the images in results_dic 
+    
+    N_DOGS_IMG = 'n_dogs_img'
+    N_MATCH = 'n_match'
+    N_CORRECT_DOGS = 'n_correct_dogs'
+    N_CORRECT_NOTDOGS = 'n_correct_notdogs'
+    N_CORRECT_BREED = 'n_correct_breed'
+    N_IMAGES = 'n_images'
+    N_NOTDOGS_IMG = 'n_notdogs_img'
+    PCT_MATCH = 'pct_match'
+    PCT_CORRECT_DOGS = 'pct_correct_dogs'
+    PCT_CORRECT_BREED = 'pct_correct_breed'
+    PCT_CORRECT_NOTDOGS = 'pct_correct_notdogs'
+    
+
+    results_stats_dic[N_DOGS_IMG] = 0
+    results_stats_dic[N_MATCH] = 0
+    results_stats_dic[N_CORRECT_DOGS] = 0
+    results_stats_dic[N_CORRECT_NOTDOGS] = 0
+    results_stats_dic[N_CORRECT_BREED] = 0
+    results_stats_dic[N_IMAGES] = 0
+
+    results_stats_dic[N_NOTDOGS_IMG] = 0
+    results_stats_dic[PCT_MATCH] = 0
+    results_stats_dic[PCT_CORRECT_DOGS] = 0
+    results_stats_dic[PCT_CORRECT_BREED] = 0
+    results_stats_dic[PCT_CORRECT_NOTDOGS] = 0
+
+
+    for key in results_dic:
+        results_stats_dic[N_IMAGES] += 1
+        if results_dic[key][2] == 1:
+            results_stats_dic[N_MATCH] +=1
+        if results_dic[key][3] == 1:
+            results_stats_dic[N_DOGS_IMG] +=1
+        if results_dic[key][3] == 1 & results_dic[key][4] == 1:
+            results_stats_dic[N_CORRECT_DOGS] +=1
+        if results_dic[key][3] == 0 & results_dic[key][4] == 0:
+            results_stats_dic[N_CORRECT_NOTDOGS] +=1
+        if results_dic[key][2] == 1 & results_dic[key][3] == 1:
+            results_stats_dic[N_CORRECT_BREED] +=1
+    
+    results_stats_dic[N_NOTDOGS_IMG] = results_stats_dic[N_IMAGES] - results_stats_dic[N_DOGS_IMG]
+    results_stats_dic[PCT_MATCH] = results_stats_dic[N_MATCH] / results_stats_dic[N_IMAGES]
+    results_stats_dic[PCT_CORRECT_DOGS] = results_stats_dic[N_CORRECT_DOGS] / results_stats_dic[N_DOGS_IMG]
+    results_stats_dic[PCT_CORRECT_BREED] = results_stats_dic[N_CORRECT_BREED] / results_stats_dic[N_DOGS_IMG]
+    results_stats_dic[PCT_CORRECT_NOTDOGS] = results_stats_dic[N_CORRECT_NOTDOGS] / results_stats_dic[N_NOTDOGS_IMG]
+
+    return results_stats_dic

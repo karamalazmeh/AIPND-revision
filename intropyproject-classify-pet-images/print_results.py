@@ -62,5 +62,28 @@ def print_results(results_dic, results_stats_dic, model,
     Returns:
            None - simply printing results.
     """    
+
+    N_DOGS_IMG = 'n_dogs_img'
+    N_MATCH = 'n_match'
+    N_CORRECT_DOGS = 'n_correct_dogs'
+    N_CORRECT_NOTDOGS = 'n_correct_notdogs'
+    N_CORRECT_BREED = 'n_correct_breed'
+    N_IMAGES = 'n_images'
+    N_NOTDOGS_IMG = 'n_notdogs_img'
+    PCT_MATCH = 'pct_match'
+    PCT_CORRECT_DOGS = 'pct_correct_dogs'
+    PCT_CORRECT_BREED = 'pct_correct_breed'
+    PCT_CORRECT_NOTDOGS = 'pct_correct_notdogs'
+
+    print('CNN architecture model is: ', model)
+
+    print('Number of images: ', results_stats_dic[N_IMAGES])
+    print('Number of dog images: ', results_stats_dic[N_DOGS_IMG])
+    print('Number of not-dog images: ', results_stats_dic[N_NOTDOGS_IMG])
+
+    for key in results_stats_dic:
+        if str(key).startswith("p"):
+            print(f"{key}: {results_stats_dic[key]:.2f}")
+
     None
                 

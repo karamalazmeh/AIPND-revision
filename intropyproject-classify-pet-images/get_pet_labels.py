@@ -23,6 +23,7 @@ from os import listdir
 #       in the return statement with results_dic dictionary that you create 
 #       with this function
 # 
+
 def get_pet_labels(image_dir):
     """
     Creates a dictionary of pet labels (results_dic) based upon the filenames 
@@ -42,4 +43,25 @@ def get_pet_labels(image_dir):
     """
     # Replace None with the results_dic dictionary that you created with this
     # function
-    return None
+
+    file_names = listdir(image_dir)
+    results_dic = dict()
+
+
+    # print("\nPrints 10 filenames from folder pet_images/")
+
+    for index, fileName in enumerate(file_names):
+        naturalName = extractNameFromFile(fileName)
+        print(f"\n {index+1:2d} pet name is: {naturalName:>25}")
+        if fileName not in results_dic:
+            results_dic[fileName] = [naturalName]
+            
+    return results_dic
+
+def extractNameFromFile(fileName: str):
+    list = fileName.split('_')
+    modName = ' '.join(list[:-1])
+    finalName = modName.lower().replace('_',' ')
+    return finalName
+
+    
